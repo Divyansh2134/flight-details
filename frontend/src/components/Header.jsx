@@ -6,7 +6,7 @@ import logo from './img/logo.svg';
 
 function Header() {
   return (
-    <Navbar className="bg-body-tertiary" data-bs-theme="dark">
+    <Navbar className="bg-body-tertiary" >
       <Container>
         <img
           src={logo}
@@ -21,6 +21,7 @@ function Header() {
           <Button variant="info"> Notification <Badge bg="secondary">9</Badge>
             <span className="visually-hidden">unread messages</span>
           </Button>
+          <div style={{ width:'20px'}}></div>
           <Navbar.Text>
             Signed in as: <a href="#login">Mark Otto</a>
           </Navbar.Text>
