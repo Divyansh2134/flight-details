@@ -23,6 +23,7 @@ var (
 	rabbitMQConn    *amqp.Connection
 	rabbitMQChannel *amqp.Channel
 	emailQueue      amqp.Queue
+	rabbitConnected bool
 )
 
 func Init() {
@@ -82,22 +83,27 @@ func Init() {
 	passengerData = database.Collection("passengers")
 
 	rabbitMQConn, err = amqp.Dial(env.RabbitUrl)
+	rabbitConnected = false
 	if err != nil {
-		Log.Error("Failed to connect to RabbitMQ: %s", err)
-	}
-	rabbitMQChannel, err = rabbitMQConn.Channel()
-	if err != nil {
-		Log.Error("Failed to open a RabbitMQ channel: %s", err)
-	}
-	emailQueue, err = rabbitMQChannel.QueueDeclare(
-		"email_queue", // name
-		true,          // durable
-		false,         // delete when unused
-		false,         // exclusive
-		false,         // no-wait
-		nil,           // arguments
-	)
-	if err != nil {
-		Log.Error("Failed to declare a RabbitMQ queue: %s", err)
+		Log.Error("Failed to connect to RabbitMQ: %v", err)
+	} else {
+		rabbitMQChannel, err = rabbitMQConn.Channel()
+		if err != nil {
+			Log.Error("Failed to open a RabbitMQ channel: %v", err)
+		} else {
+			emailQueue, err = rabbitMQChannel.QueueDeclare(
+				"email_queue", // name
+				true,          // durable
+				false,         // delete when unused
+				false,         // exclusive
+				false,         // no-wait
+				nil,           // arguments
+			)
+			if err != nil {
+				Log.Error("Failed to declare a RabbitMQ queue: %v", err)
+			} else {
+				rabbitConnected = true
+			}
+		}
 	}
 }

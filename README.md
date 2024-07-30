@@ -73,6 +73,8 @@ with Data:
 
 - And for email notification I used RabbitMQ to send email to all the pessangers
 
+- Make sure RabbitMQ is runnig locally (it does not break if rabbit is not started)
+
 ## Docker build
 
 - Build Docker file using docker command for example:- ```docker build -t  backend:1.0 .``` 
