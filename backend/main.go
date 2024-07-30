@@ -24,7 +24,9 @@ func main() {
 	})
 	r.GET("/ws", HandleConnection)
 
-	go startEmailConsumer()
+	if rabbitConnected {
+		go startEmailConsumer()
+	}
 
 	r.Run(":8000")
 }
