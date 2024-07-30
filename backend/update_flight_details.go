@@ -61,5 +61,6 @@ func UpdateFlightDetails(c *gin.Context) {
 	}
 
 	NotifyClients(message)
+	sendEmail(message)
 	c.JSON(http.StatusOK, gin.H{"message": "Flight details updated successfully", "matchedCount": result.MatchedCount, "modifiedCount": result.ModifiedCount})
 }
