@@ -1,5 +1,5 @@
 // src/FlightStatus.js
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Table, Container, Row, Col } from 'react-bootstrap';
 
 const mockData = [
@@ -9,7 +9,28 @@ const mockData = [
   { flight: 'SW101', status: 'Gate Change', gate: 'D4', remarks: 'Gate changed to D4' }
 ];
 
-const FlightStatus = () => {
+// eslint-disable-next-line react/prop-types
+const FlightStatus = ({ flightStatusUrl }) => {
+
+  const [flight, setFlight] = useState(() => {
+    const savedFlight = sessionStorage.getItem('flightDetails');
+    return savedFlight ? JSON.parse(savedFlight) : mockData;
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(flightStatusUrl);
+        const data = await response.json();
+        setFlight(data);
+        sessionStorage.setItem('flightDetails', JSON.stringify(data));
+      } catch (error) {
+        console.error('Error fetching flight data:', error);
+      }
+    };
+    fetchData();
+  }, [flightStatusUrl]);
+
   return (
     <Container>
       <Row className="my-4">
@@ -25,7 +46,7 @@ const FlightStatus = () => {
               </tr>
             </thead>
             <tbody>
-              {mockData.map((flight, index) => (
+              {flight.map((flight, index) => (
                 <tr key={index}>
                   <td>{flight.flight}</td>
                   <td>{flight.status}</td>
