@@ -8,7 +8,7 @@ import (
 )
 
 func connectMongo() (*mongo.Client, error) {
-	clientOptions := options.Client().ApplyURI("mongodb://192.168.29.191:27017")
+	clientOptions := options.Client().ApplyURI(env.MongoDbUrl)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		return nil, err

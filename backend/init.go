@@ -13,7 +13,9 @@ import (
 var (
 	Log         *log.Logger
 	postgresDB  *gorm.DB
+	env         = EnvConfig{}
 	mongoClient *mongo.Client
+	flightsData *mongo.Collection
 )
 
 func Init() {
@@ -55,12 +57,13 @@ func Init() {
 		Log.SetLevel(log.DebugLevel)
 	}
 
+	env.MongoDbUrl = os.Getenv("MONGO_DB_URL")
+
 	var err error
 	mongoClient, err = connectMongo()
 	if err != nil {
 		Log.Error("Could not connect to MongoDB: %v", err)
 	}
-	// database := mongoClient.Database("flights-data")
-	// passengersCollection := database.Collection("passengers")
-	// flightsCollection := database.Collection("flights")
+	database := mongoClient.Database("Database")
+	flightsData = database.Collection("flights")
 }
