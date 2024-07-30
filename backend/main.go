@@ -19,7 +19,12 @@ func main() {
 	r.GET("/flight-details", GetFlightDetails)
 	r.POST("/update-flight-details", UpdateFlightDetails)
 	r.POST("/create-flight", CreateFlight)
+	r.POST("/create-passenger", func(c *gin.Context) {
+		CreatePassenger(c)
+	})
 	r.GET("/ws", HandleConnection)
+
+	go startEmailConsumer()
 
 	r.Run(":8000")
 }
