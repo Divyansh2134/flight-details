@@ -8,6 +8,9 @@ import (
 )
 
 func connectMongo() (*mongo.Client, error) {
+	if env.MongoDbUrl == "" {
+		env.MongoDbUrl = "mongodb://localhost:27017"
+	}
 	clientOptions := options.Client().ApplyURI(env.MongoDbUrl)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
