@@ -19,6 +19,9 @@ var (
 )
 
 func Init() {
+
+	env.MongoDbUrl = os.Getenv("MONGO_DB_URL")
+
 	verbose := flag.Bool("v", false, "Enable verbose logging (debug level)")
 	verboseLong := flag.Bool("verbose", false, "Enable verbose logging (debug level)")
 	errorStyle := lipgloss.NewStyle().
@@ -56,8 +59,6 @@ func Init() {
 	if *verbose || *verboseLong {
 		Log.SetLevel(log.DebugLevel)
 	}
-
-	env.MongoDbUrl = os.Getenv("MONGO_DB_URL")
 
 	var err error
 	mongoClient, err = connectMongo()
