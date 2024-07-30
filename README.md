@@ -20,6 +20,9 @@
 
 - Access using url ```http://localhost:80/```
 
+
+Note: Firstly it shows mock data if backend is not up after backends service is started and our db has data then it can fetch the data from database
+
 # Backend 
 
 ## Working Locally
@@ -30,7 +33,7 @@
 
 - It has two post urls to access 
 
-- Creating flight data
+- Creating flight data do Post request to
 ```http://localhost:8000/create-flight```
  for creating flights database in mongodb(make sure your local mongodb is running)
 with data: 
@@ -43,7 +46,7 @@ with data:
 }
 ```
 
-- Updating the existing data ```http://localhost:8000/update-flight-details```
+- Updating the existing data do Post request to ```http://localhost:8000/update-flight-details```
 
 with data :
 ```
@@ -54,6 +57,21 @@ with data :
 	"remarks": "Gate Changed to A3"
 }
 ```
+
+- Creating passengers do Post request to ```http://localhost:8000/create-passenger```
+
+with Data: 
+```
+{
+    "id":"1",
+    "name":"jhon",
+    "email":"test@gmail.com"
+}
+```
+
+- For notification purpose I use websocket for sending notification to frontend.
+
+- And for email notification I used RabbitMQ to send email to all the pessangers
 
 ## Docker build
 
@@ -91,6 +109,16 @@ with data structured as
 	"remarks": "Gate Changed to A3"
 }
 ```
+
+- create Passenger POST request on```http://localhost:8000/create-passenger```
+
+with Data: 
+```
+{
+    "id":"1",
+    "name":"jhon",
+    "email":"test@gmail.com"
+}
 
 
 
