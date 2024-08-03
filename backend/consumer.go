@@ -2,13 +2,13 @@ package main
 
 func startEmailConsumer() {
 	msgs, err := rabbitMQChannel.Consume(
-		emailQueue.Name, // queue
-		"",              // consumer
-		true,            // auto-ack
-		false,           // exclusive
-		false,           // no-local
-		false,           // no-wait
-		nil,             // args
+		emailQueue.Name,
+		"",
+		true,
+		false,
+		false,
+		false,
+		nil,
 	)
 	if err != nil {
 		Log.Error("Failed to register a RabbitMQ consumer:", "err", err)
@@ -18,7 +18,7 @@ func startEmailConsumer() {
 
 	go func() {
 		for d := range msgs {
-			Log.Error("Received a message:", "err", d.Body)
+			Log.Error("Received a message:", "err", string(d.Body))
 			sendEmailsToPassengers(string(d.Body))
 		}
 	}()

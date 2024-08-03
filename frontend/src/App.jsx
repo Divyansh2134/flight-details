@@ -1,6 +1,7 @@
 import './App.css'
 import Header from './components/Header'
 import FlightStatus from './components/FlightStatus'
+import FlightSearch from './components/Hero'
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
   return (
     <>
       <Header websocketUrl={websocketUrl} ></Header >
+      <FlightSearch></FlightSearch>
       <FlightStatus flightStatusUrl={flightStatus} ></FlightStatus>
     </>
   )

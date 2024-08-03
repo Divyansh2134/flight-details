@@ -10,12 +10,10 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/streadway/amqp"
 	"go.mongodb.org/mongo-driver/mongo"
-	"gorm.io/gorm"
 )
 
 var (
 	Log             *log.Logger
-	postgresDB      *gorm.DB
 	env             = EnvConfig{}
 	mongoClient     *mongo.Client
 	flightsData     *mongo.Collection
@@ -92,12 +90,12 @@ func Init() {
 			Log.Error("Failed to open a RabbitMQ channel: %v", err)
 		} else {
 			emailQueue, err = rabbitMQChannel.QueueDeclare(
-				"email_queue", // name
-				true,          // durable
-				false,         // delete when unused
-				false,         // exclusive
-				false,         // no-wait
-				nil,           // arguments
+				"email_queue",
+				true,
+				false,
+				false,
+				false,
+				nil,
 			)
 			if err != nil {
 				Log.Error("Failed to declare a RabbitMQ queue: %v", err)
