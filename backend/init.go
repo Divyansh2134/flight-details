@@ -90,12 +90,21 @@ func Init() {
 			Log.Error("Failed to open a RabbitMQ channel: %v", err)
 		} else {
 			emailQueue, err = rabbitMQChannel.QueueDeclare(
+<<<<<<< HEAD
 				"email_queue",
 				true,
 				false,
 				false,
 				false,
 				nil,
+=======
+				"email_queue", // name
+				true,          // durable
+				false,         // delete when unused
+				false,         // exclusive
+				false,         // no-wait
+				nil,           // arguments
+>>>>>>> 1b06fc121b965a52adc8b90062feab2256c62b72
 			)
 			if err != nil {
 				Log.Error("Failed to declare a RabbitMQ queue: %v", err)
